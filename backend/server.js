@@ -2,9 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const parseCsv = require("./parsing");
 const DataModel = require("../database/DataModel");
-const mongoose = require("mongoose");
-
-const uri = "mongodb://127.0.0.1:27017/practice";
+const db = require("../database/db");
 
 //Server Setup
 const PORT = process.env.PORT || 3000;
@@ -15,12 +13,7 @@ app.listen(PORT, () => {
   console.log("Server is running on http://localhost:" + PORT);
 });
 
-mongoose
-  .connect(uri)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((error) => console.error("Error connecting to MongoDb", error));
-
-//Middleware Setup
+//Multer Middleware Setup
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
